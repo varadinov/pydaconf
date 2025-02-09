@@ -178,12 +178,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: coverage-combine
-          path: coverage-combine/coverage.svg
+          path: coverage-combine
           merge-multiple: true
       - name: Copy coverage badge to gh-pages
         run: |
           mkdir -p gh-pages
-          cp coverage.svg gh-pages/
+          cp coverage-combine/coverage.svg gh-pages/
       - name: Deploy badge to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
