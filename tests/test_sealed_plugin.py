@@ -3,9 +3,8 @@ from unittest.mock import patch
 import pytest
 
 from pydaconf import PydaConf
-from pydantic import BaseModel
-
 from pydaconf.utils.exceptions import PluginException
+from pydantic import BaseModel
 
 
 class Config(BaseModel):
