@@ -180,6 +180,8 @@ jobs:
           pattern: coverage-combine
           path: coverage-combine
           merge-multiple: true
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
       - name: Copy coverage badge to gh-pages
         run: |
           mkdir -p gh-pages/htmlcov
