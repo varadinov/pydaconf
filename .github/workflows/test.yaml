@@ -182,14 +182,17 @@ jobs:
           pattern: coverage-html
           path: coverage-html
           merge-multiple: true
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-      - name: Copy coverage badge to gh-pages
-        run: |
-          mkdir -p gh-pages/htmlcov
-          cp -rf coverage-html/. gh-pages/htmlcov
-      - name: Deploy badge to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+#      - name: Setup tmate session
+#        uses: mxschmitt/action-tmate@v3
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          branch: gh-pages
-          folder: gh-pages
+          path: ./coverage-html
+
+      - name: Deploy to GitHub Pages
+        id: coverage-html
+        uses: actions/deploy-pages@v4
