@@ -145,7 +145,7 @@ jobs:
       - run: .venv/bin/coverage combine coverage
       - run: .venv/bin/coverage report
       - run: .venv/bin/coverage html --title "Coverage for ${{ github.sha }}"
-      - run: .venv/bin/coverage-badge -o coverage.svg -f
+      - run: .venv/bin/coverage-badge -o htmlcov/coverage.svg -f
       - name: Store coverage HTML
         uses: actions/upload-artifact@v4
         with:
