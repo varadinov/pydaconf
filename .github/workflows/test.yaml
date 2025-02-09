@@ -169,7 +169,7 @@ jobs:
         with:
           jobs: ${{ toJSON(needs) }}
 
-  badge:
+  publish-htmlcov:
     needs:
         - coverage-combine
     runs-on: ubuntu-latest
@@ -182,8 +182,8 @@ jobs:
           merge-multiple: true
       - name: Copy coverage badge to gh-pages
         run: |
-          mkdir -p gh-pages
-          cp coverage-combine/coverage.svg gh-pages/
+          mkdir -p gh-pages/htmlcov
+          cp -rf coverage-combine/. gh-pages/htmlcov
       - name: Deploy badge to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
