@@ -35,7 +35,7 @@ jobs:
       - name: Install Dependencies
         run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - name: Lint
-        run: uvx ruff check .
+        run: .venv/bin/ruff check .
 
   mypy:
     runs-on: ubuntu-latest
@@ -59,7 +59,7 @@ jobs:
       - name: Install Dependencies
         run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - name: Lint
-        run: uvx mypy .
+        run: .venv/bin/mypy .
 
 #  debug-python-version:
 #    runs-on: ubuntu-latest
@@ -142,9 +142,9 @@ jobs:
           path: coverage
           merge-multiple: true
       - run: ls -la coverage
-      - run: uvx coverage combine coverage
-      - run: uvx coverage report
-      - run: uvx coverage html --title "Coverage for ${{ github.sha }}"
+      - run: .venv/bin/coverage combine coverage
+      - run: .venv/bin/coverage report
+      - run: .venv/bin/coverage html --title "Coverage for ${{ github.sha }}"
       - name: Store coverage HTML
         uses: actions/upload-artifact@v4
         with:
