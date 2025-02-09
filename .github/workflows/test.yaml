@@ -36,7 +36,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv pip install -r pyproject.toml --all-extras
+        run: uv sync --dev --all-extras
       - name: Lint
         run: ruff check .
 
@@ -60,7 +60,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv pip install -r pyproject.toml --all-extras
+        run: uv sync --dev --all-extras
       - name: Lint
         run: mypy .
 
@@ -92,7 +92,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv pip install -r pyproject.toml --all-extras
+        run: uv sync --dev --all-extras
       - run: mkdir coverage
       - name: Test
         run: pytest
@@ -126,7 +126,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv pip install -r pyproject.toml --all-extras
+        run: uv sync --dev --all-extras
       - name: Get coverage files
         uses: actions/download-artifact@v4
         with:
