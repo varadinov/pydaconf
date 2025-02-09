@@ -176,6 +176,8 @@ jobs:
           jobs: ${{ toJSON(needs) }}
 
   publish-htmlcov:
+    environment:
+      name: github-pages
     needs:
         - coverage-combine
     runs-on: ubuntu-latest
