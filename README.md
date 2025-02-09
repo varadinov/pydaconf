@@ -3,7 +3,7 @@
 </p>
 <p align="center">
 <a href="https://github.com/varadinov/pydaconf/actions?query=workflow%3ATest+event%3Apush+branch%3Amain" target="_blank">
-    <img src="https://github.com/varadinov/pydaconf/workflows/Test/badge.svg" alt="Test">
+    <img src="https://github.com/varadinov/pydaconf/actions/workflows/test.yaml/badge.svg?branch=main" alt="Test">
 </a>
 
 ## Help

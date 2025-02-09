@@ -11,6 +11,7 @@ on:
   schedule:
     # cron every week on monday
     - cron: "0 0 * * 1"
+  workflow_dispatch:
 
 jobs:
   lint:
