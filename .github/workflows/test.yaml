@@ -12,18 +12,7 @@ on:
     # cron every week on monday
     - cron: "0 0 * * 1"
 
-env:
-  UV_SYSTEM_PYTHON: 1
-
-
 jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -44,7 +33,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv sync --dev --all-extras
+        run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - name: Lint
         run: ruff check .
 
@@ -68,9 +57,20 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv sync --dev --all-extras
+        run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - name: Lint
         run: mypy .
+
+  debug-python-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
   test:
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv sync --dev --all-extras
+        run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - run: mkdir coverage
       - name: Test
         run: pytest
@@ -134,7 +134,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: uv sync --dev --all-extras
+        run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - name: Get coverage files
         uses: actions/download-artifact@v4
         with:
