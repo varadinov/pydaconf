@@ -145,6 +145,7 @@ jobs:
       - run: .venv/bin/coverage combine coverage
       - run: .venv/bin/coverage report
       - run: .venv/bin/coverage html --title "Coverage for ${{ github.sha }}"
+      - run: .venv/bin/coverage-badge -o coverage.svg -f
       - name: Store coverage HTML
         uses: actions/upload-artifact@v4
         with:
@@ -167,3 +168,24 @@ jobs:
         uses: re-actors/alls-green@release/v1
         with:
           jobs: ${{ toJSON(needs) }}
+
+  badge:
+    needs:
+        - coverage-combine
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get coverage files
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-combine
+          path: coverage-combine/coverage.svg
+          merge-multiple: true
+      - name: Copy coverage badge to gh-pages
+        run: |
+          mkdir -p gh-pages
+          cp coverage.svg gh-pages/
+      - name: Deploy badge to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: gh-pages

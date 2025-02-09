@@ -76,6 +76,7 @@ dev = [
     "coverage>=7.6.11",
     "types-pyyaml>=6.0.12.20241230",
     "types-requests>=2.32.0.20241016",
+    "coverage-badge>=1.1.2",
 ]
 
 [project.optional-dependencies]

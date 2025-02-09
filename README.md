@@ -1,12 +1,17 @@
-# Pydaconf
-Modern python configuration file manager using [Pydantic](https://docs.pydantic.dev/latest/) and python type hints.
+<p align="center">
+    <em>Modern python configuration file manager using  <a href="https://docs.pydantic.dev/latest/">Pydantic</a> and python type hints.</em>
+</p>
+<p align="center">
+<a href="https://github.com/varadinov/pydaconf/actions?query=workflow%3ATest+event%3Apush+branch%3Amain" target="_blank">
+    <img src="https://github.com/varadinov/pydaconf/workflows/Test/badge.svg" alt="Test">
+</a>
 
 ## Help
-See [documentation]https://...) for more details.
+See [documentation](https://...) for more details.
 
 ## Installation
-Install using `pip install pydaconf[all]`
-For more installation options see the [Install](https://... section in the documentation.
+Install using `pip install pydaconf[all]`  
+For more installation options see the [Install](https://...) section in the documentation.
 
 
 ## A Simple Example
