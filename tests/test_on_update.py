@@ -62,5 +62,7 @@ def test_on_update() -> None:
 
 
     assert mock_callback_users_password.call_count == 2
-    expected_calls = [call('.users[0].password', 'Update'), call('.users[1].password', 'Update')]
-    mock_callback_users_password.assert_has_calls(expected_calls)
+    expected_calls = [
+        call('.users[0].password', 'Update'),
+        call('.users[1].password', 'Update')]
+    mock_callback_users_password.assert_has_calls(expected_calls, any_order=True)

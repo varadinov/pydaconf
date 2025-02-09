@@ -103,7 +103,7 @@ jobs:
         run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - run: mkdir coverage
       - name: Test
-        run: .venv/bin/pytest
+        run: .venv/bin/coverage run -m pytest .
         env:
           COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
           CONTEXT: ${{ runner.os }}-py${{ matrix.python-version }}
