@@ -61,16 +61,16 @@ jobs:
       - name: Lint
         run: uvx mypy .
 
-  debug-python-version:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+#  debug-python-version:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#      - name: Set up Python
+#        uses: actions/setup-python@v5
+#        with:
+#          python-version: "3.10"
+#      - name: Setup tmate session
+#        uses: mxschmitt/action-tmate@v3
 
   test:
     runs-on: ubuntu-latest
@@ -103,7 +103,7 @@ jobs:
         run: uv venv && source .venv/bin/activate && uv sync --dev  --all-extras
       - run: mkdir coverage
       - name: Test
-        run: pytest
+        run: .venv/bin/pytest
         env:
           COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
           CONTEXT: ${{ runner.os }}-py${{ matrix.python-version }}

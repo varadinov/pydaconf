@@ -74,6 +74,8 @@ dev = [
     "mypy>=1.15.0",
     "ruff>=0.9.5",
     "coverage>=7.6.11",
+    "types-pyyaml>=6.0.12.20241230",
+    "types-requests>=2.32.0.20241016",
 ]
 
 [project.optional-dependencies]
