@@ -177,15 +177,15 @@ jobs:
       - name: Get coverage files
         uses: actions/download-artifact@v4
         with:
-          pattern: coverage-combine
-          path: coverage-combine
+          pattern: coverage-html
+          path: coverage-html
           merge-multiple: true
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
       - name: Copy coverage badge to gh-pages
         run: |
           mkdir -p gh-pages/htmlcov
-          cp -rf coverage-combine/. gh-pages/htmlcov
+          cp -rf coverage-html/. gh-pages/htmlcov
       - name: Deploy badge to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
