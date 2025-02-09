@@ -1,0 +1,158 @@
+[build-system]
+requires = ["flit_core>=3.2"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pydaconf"
+version = "0.1.0"
+description = "Configuration file provider that uses pydantic"
+readme = "README.md"
+authors = [
+    {name = "Borislav Varadinov", email = "borislav.varadinov@outlook.com"},
+]
+classifiers = [
+    "Development Status :: 3 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0.1",
+    "python-dotenv>=1.0.1",
+]
+
+[tool.flit.module]
+name = "pydaconf"
+
+[tool.bandit]
+exclude_dirs = ["build","dist","tests","scripts"]
+number = 4
+recursive = true
+targets = "src"
+
+
+[tool.black]
+line-length = 120
+fast = true
+
+[tool.flake8]
+max-line-length = 120
+select = "F,E,W,B,B901,B902,B903"
+exclude = [
+    ".eggs",
+    ".git",
+    ".tox",
+    "nssm",
+    "obj",
+    "out",
+    "tests",
+]
+ignore = [
+    "E722",
+    "B001",
+    "W503",
+    "E203"
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+    "mypy>=1.15.0",
+    "ruff>=0.9.5",
+    "coverage>=7.6.11",
+]
+
+[project.optional-dependencies]
+yaml = ["pyyaml>=6.0.1"]
+toml = ["tomli>=2.0.1"]
+requests = ["requests>=2.32.3"]
+cryptography = ["cryptography>=44.0.0"]
+cli = [
+    "typer==0.15.1"
+]
+all = [
+    "tomli>=2.0.1",
+    "pyyaml>=6.0.1",
+    "requests>=2.32.3",
+    "cryptography>=44.0.0",
+    "typer==0.15.1"
+]
+
+[project.scripts]
+pydaconf = "pydaconf:cli.app"
+
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+    exclude = [
+        '^\.venv/.+$',
+#        '^tests/.+$',
+    ]
+
+[tool.ruff]
+line-length = 120
+target-version = 'py310'
+
+[tool.ruff.lint]
+select = [
+    'F',      # Pyflakes
+    'E',      # pycodestyle (Error)
+    'I',      # isort
+    # 'D',      # pydocstyle
+    'UP',     # pyupgrade
+    'YTT',    # flake8-2020
+    'B',      # flake8-bugbear
+    'T10',    # flake8-debugger
+    'T20',    # flake8-print
+    'C4',     # flake8-comprehensions
+    'PYI006', # flake8-pyi
+    'PYI062', # flake8-pyi
+    'PYI063', # flake8-pyi
+    'PYI066', # flake8-pyi
+]
+ignore = ['D105', 'D107', 'D205', 'D415', 'E501', 'B011', 'B028', 'B904']
+flake8-quotes = {inline-quotes = 'single', multiline-quotes = 'double'}
+isort = { known-first-party = ['pydantic', 'tests'] }
+mccabe = { max-complexity = 14 }
+pydocstyle = { convention = 'google' }
+
+
+[tool.ruff.lint.per-file-ignores]
+'pydaconf/__init__.py' = ['F405', 'F403', 'D']
+
+
+[tool.coverage.run]
+source = ['pydaconf']
+# omit = []
+branch = true
+relative_files = true
+context = '${CONTEXT}'
+
+[tool.coverage.report]
+precision = 2
+exclude_lines = [
+    'pragma: no cover',
+    'raise NotImplementedError',
+    'if TYPE_CHECKING:',
+    'if typing.TYPE_CHECKING:',
+    '@overload',
+    '@typing.overload',
+    '\(Protocol\):$',
+    'typing.assert_never',
+    'assert_never',
+]
+
+[tool.coverage.paths]
+source = [
+    'pydantic/',
+    '/Users/runner/work/pydantic/pydantic/pydantic/',
+    'D:\a\pydantic\pydantic\pydantic',
+]
