@@ -11,9 +11,6 @@
 
 </p>
 
-
-https://varadinov.github.io/pydaconf/coverage.svg
-
 ## Help
 See [documentation](https://...) for more details.
 
