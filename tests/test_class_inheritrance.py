@@ -2,16 +2,18 @@ from pydaconf import PydaConf
 from pydantic import BaseModel
 
 
-class Config(BaseModel):
+class BaseConfig(BaseModel):
     username: str
+
+class SecureConfig(BaseConfig):
     password: str
 
-def test_repr() -> None:
+def test_class_inheritance() -> None:
     config = {
         'username': 'test',
         'password': 'test'
     }
 
-    provider = PydaConf[Config]()
+    provider = PydaConf[SecureConfig]()
     provider.from_dict(config)
     assert str(provider) == "PydaConf({'username': 'test', 'password': 'test'})"

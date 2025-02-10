@@ -3,7 +3,7 @@ import re
 import threading
 from collections.abc import Callable
 from functools import partial
-from typing import Generic, TypeAlias, TypeVar
+from typing import Generic, TypeAlias, TypeVar, get_args
 
 from pydaconf.plugins.base import PluginBase
 from pydaconf.utils.exceptions import ProviderException
@@ -20,8 +20,7 @@ ConfigValueType: TypeAlias = list | dict | str | int | bool | None
 
 class PydaConf(Generic[T]):
 
-    def __init__(self, schema: type[T]) -> None:
-        self.schema = schema
+    def __init__(self) -> None:
         self._raw_config: dict | None = None
         self._config: T | None = None
         self._plugins: dict[str, PluginBase] = {}
@@ -43,6 +42,7 @@ class PydaConf(Generic[T]):
 
     @property
     def config(self) -> T:
+        generic_type = self._get_generic_type()
         if self._raw_config is None:
             raise ProviderException("""PydaConf is not initialized. 
                                     You need to run on of these methods first from_file('file_path'), from_dict(dict_data) or from_url(url).""")
@@ -56,7 +56,7 @@ class PydaConf(Generic[T]):
 
             try:
                 self.logger.debug("Build config object")
-                config: T = self.schema(**config_copy)
+                config: T = generic_type(**config_copy)
                 self._config = config
             except ValidationError as e:
                 raise ProviderException('Configuration file validation failed with errors', e.errors()) from e
@@ -72,6 +72,20 @@ class PydaConf(Generic[T]):
         self._update_subscribers.setdefault(key_pattern, [])
         self._update_subscribers[key_pattern].append(callback)
 
+    def _get_generic_type(self) -> type[T]:
+        """Return the type of generic T """
+
+        # This is a bit hacky method since __orig_class__ is not well documented and could be changed in future...
+        orig_class = getattr(self, '__orig_class__', None)
+        if orig_class is None:
+            raise ProviderException('PydaConf must be defined as generic Config[MyPydanticType]()')
+
+        generic_type: type[T] | None = next(iter(get_args(orig_class)), None)
+        if generic_type is None or not issubclass(generic_type, BaseModel):
+            raise ProviderException('Generic type must inherit pydantic BaseModel class Config[MyPydanticType]()')
+
+        return generic_type
+
     def _load_plugins(self) -> None:
         self._load_builtin_plugins()
         self._load_dynamic_plugins()
@@ -86,8 +100,11 @@ class PydaConf(Generic[T]):
 
     def _interpolate_templates(self, node: ConfigValueType, config_data: dict) -> None:
         if isinstance(node, list):
-            for element in node:
-                self._interpolate_templates(element, config_data)
+            for index, element in enumerate(node):
+                if type(element) is str:
+                    node[index] = interpolate_template(element, config_data)
+                else:
+                    self._interpolate_templates(element, config_data)
 
         elif isinstance(node, dict):
             for key, item in node.items():
@@ -102,7 +119,11 @@ class PydaConf(Generic[T]):
     def _inject_secrets(self, node: ConfigValueType, key_path: str="") -> None:
         if isinstance(node, list):
             for index, element in enumerate(node):
-                self._inject_secrets(element, key_path=f"{key_path}[{index}]")
+                if type(element) is str:
+                    # TODO: Implement injection in list of strings
+                    pass
+                else:
+                    self._inject_secrets(element, key_path=f"{key_path}[{index}]")
 
         elif isinstance(node, dict):
             for key, item in node.items():
@@ -153,7 +174,7 @@ class PydaConf(Generic[T]):
         else:
             current[final_key] = value  # Update the final key
 
-        self._config = self.schema(**config_model)
+        self._config = self._get_generic_type()(**config_model)
 
 
     def _on_update(self, key: str, value: str) -> None:

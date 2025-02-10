@@ -13,7 +13,7 @@ def test_env_plugin() -> None:
         "name": "Test",
         "secret": "ENV:///TEST"
     }
-    conf_provider = PydaConf[Config](Config)
+    conf_provider = PydaConf[Config]()
     with patch("os.environ") as environ:
         environ.get = MagicMock(return_value = 'TEST')
 

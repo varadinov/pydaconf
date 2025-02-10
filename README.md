@@ -1,22 +1,21 @@
+
 <p align="center">
     <em>Modern python configuration file manager using  <a href="https://docs.pydantic.dev/latest/">Pydantic</a> and python type hints.</em>
 </p>
-<p align="center">
-    <a href="https://github.com/varadinov/pydaconf/actions?query=workflow%3ATest+event%3Apush+branch%3Amain" target="_blank">
-        <img src="https://github.com/varadinov/pydaconf/actions/workflows/test.yaml/badge.svg?branch=main" alt="Test">
-    </a>
-   <a href="https://varadinov.github.io/pydaconf/" target="_blank">
-        <img src="https://varadinov.github.io/pydaconf/coverage.svg" alt="Test">
-   </a>
 
-</p>
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/varadinov/pydaconf/test.yaml)
+![GitHub last commit](https://img.shields.io/github/last-commit/varadinov/pydaconf)
+![GitHub](https://img.shields.io/github/license/varadinov/pydaconf)
+[![GitHub](https://varadinov.github.io/pydaconf/coverage.svg)](https://varadinov.github.io/pydaconf/)
+[![Docs](https://img.shields.io/badge/docs-latest-blue)](https://varadinov.github.io/pydaconf/)
 
-## Help
-See [documentation](https://...) for more details.
 
 ## Installation
 Install using `pip install pydaconf[all]`  
 For more installation options see the [Install](https://...) section in the documentation.
+
+## Help
+See [documentation](https://...) for more details.
 
 
 ## A Simple Example

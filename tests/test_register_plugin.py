@@ -22,7 +22,7 @@ def test_register_plugin() -> None:
        "name": 'test',
        "secret": "TEST:///TEST"
     }
-    provider = PydaConf[Config](Config)
+    provider = PydaConf[Config]()
     provider.from_dict(config)
     provider.register_plugin(TestPlugin)
     assert provider.config.secret == 'TEST'

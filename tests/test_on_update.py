@@ -48,7 +48,7 @@ def test_on_update() -> None:
             { "username": "test2", "password": "ONUPDATE:///Test3"},
         ]
     }
-    provider = PydaConf[Config](Config)
+    provider = PydaConf[Config]()
     provider.register_plugin(TestUpdatePlugin)
     provider.from_dict(config)
     provider.on_update(r'.connection.password', mock_callback_connection_password)

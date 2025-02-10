@@ -17,7 +17,7 @@ def test_sealed_exception() -> None:
 
     with patch('os.environ.get', return_value='WrongKey'):
         with pytest.raises(PluginException):
-            provider: PydaConf[Config] = PydaConf[Config](Config)
+            provider: PydaConf[Config] = PydaConf[Config]()
             provider.from_dict(config)
             _ = provider.config
 
@@ -27,7 +27,7 @@ def test_sealed_load()  -> None:
     }
 
     with patch('os.environ.get', return_value='ky8Uv_xkl4WgvHjrrdffJDRV1D5G5pqBTBD0TNGtAi0='):
-        provider: PydaConf[Config] = PydaConf[Config](Config)
+        provider: PydaConf[Config] = PydaConf[Config]()
         provider.from_dict(config)
         loaded_config = provider.config
         assert loaded_config.secret == 'Test Secret'

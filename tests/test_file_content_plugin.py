@@ -11,6 +11,6 @@ def test_file_content_load() -> None:
        "name": "Test",
        "secret": "FILE_CONTENT:///tests/resources/file_content_plugin.txt"
     }
-    provider = PydaConf[Config](Config)
+    provider = PydaConf[Config]()
     provider.from_dict(config)
     assert provider.config.secret == 24

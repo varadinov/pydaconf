@@ -9,7 +9,8 @@ class Config(BaseModel):
     username: str
     password: str
 
-def test_not_initialized() -> None:
+def test_validation_errors() -> None:
     provider = PydaConf[Config]()
     with pytest.raises(ProviderException):
-        assert provider.config
+        provider.from_dict({'username': "test"})
+        _ = provider.config

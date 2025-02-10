@@ -1,7 +1,7 @@
-
 import importlib
 import importlib.metadata
 import inspect
+import os
 import pkgutil
 from collections.abc import Iterator
 
@@ -10,7 +10,7 @@ from pydaconf.plugins.base import PluginBase
 
 
 def load_builtin_plugins() -> Iterator[PluginBase]:
-    for _, module_name, _ in pkgutil.iter_modules([str(f"{pydaconf.plugins.__name__.replace('.', '/')}")]):
+    for _, module_name, _ in pkgutil.iter_modules([str(f"{os.path.dirname(pydaconf.plugins.base.__file__)}")]):
         full_module_name = f"{pydaconf.plugins.__name__}.{module_name}"
         module = importlib.import_module(full_module_name) 
 
