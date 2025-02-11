@@ -42,7 +42,6 @@ class PydaConf(Generic[T]):
 
     @property
     def config(self) -> T:
-        generic_type = self._get_generic_type()
         if self._raw_config is None:
             raise ProviderException("""PydaConf is not initialized. 
                                     You need to run on of these methods first from_file('file_path'), from_dict(dict_data) or from_url(url).""")
@@ -56,7 +55,7 @@ class PydaConf(Generic[T]):
 
             try:
                 self.logger.debug("Build config object")
-                config: T = generic_type(**config_copy)
+                config: T = self._get_generic_type()(**config_copy)
                 self._config = config
             except ValidationError as e:
                 raise ProviderException('Configuration file validation failed with errors', e.errors()) from e
@@ -107,39 +106,42 @@ class PydaConf(Generic[T]):
                     self._interpolate_templates(element, config_data)
 
         elif isinstance(node, dict):
-            for key, item in node.items():
-                if isinstance(item, dict) or isinstance(item, list):
-                    self._interpolate_templates(item, config_data)
+            for key, element in node.items():
+                if isinstance(element, dict) or isinstance(element, list):
+                    self._interpolate_templates(element, config_data)
                 
-                elif isinstance(item, str):
-                    if has_interpolation_template(item):
-                        node[key] = interpolate_template(item, config_data)
+                elif isinstance(element, str):
+                    if has_interpolation_template(element):
+                        node[key] = interpolate_template(element, config_data)
 
+
+    def _match_and_execute_plugin(self, element: str, key: str) -> str:
+        match_prefix = re.match(r'(?P<PLUGIN_PREFIX>[^:]+):///(?P<VALUE>[^\s]+)', element)
+        if match_prefix:
+            plugin_prefix = match_prefix.groupdict()['PLUGIN_PREFIX']
+            value = match_prefix.groupdict()['VALUE']
+            plugin = self._plugins.get(plugin_prefix.upper())
+            if plugin is None:
+                raise ProviderException(f"Plugin with prefix '{plugin_prefix}' is not registered")
+            return plugin._execute_plugin(value, partial(self._on_update, key))
+        else:
+            return element
 
     def _inject_secrets(self, node: ConfigValueType, key_path: str="") -> None:
         if isinstance(node, list):
             for index, element in enumerate(node):
                 if type(element) is str:
-                    # TODO: Implement injection in list of strings
-                    pass
+                   node[index] = self._match_and_execute_plugin(element, f"{key_path}[{index}]")
                 else:
                     self._inject_secrets(element, key_path=f"{key_path}[{index}]")
 
         elif isinstance(node, dict):
-            for key, item in node.items():
-                if isinstance(item, dict) or isinstance(item, list):
-                    self._inject_secrets(item, key_path=f"{key_path}.{key}")
+            for key, element in node.items():
+                if isinstance(element, dict) or isinstance(element, list):
+                    self._inject_secrets(element, key_path=f"{key_path}.{key}")
 
-                elif isinstance(item, str):
-                    match_prefix = re.match(r'(?P<PLUGIN_PREFIX>[^:]+):///(?P<VALUE>[^\s]+)', item)
-                    if match_prefix:
-                        plugin_prefix = match_prefix.groupdict()['PLUGIN_PREFIX']
-                        value = match_prefix.groupdict()['VALUE']
-                        plugin = self._plugins.get(plugin_prefix.upper())
-                        if plugin is None:
-                            raise ProviderException(f"Plugin with prefix '{plugin_prefix}' is not registered")
-                        
-                        node[key] =  plugin._execute_plugin(value, partial(self._on_update, f"{key_path}.{key}"))
+                elif isinstance(element, str):
+                    node[key] = self._match_and_execute_plugin(element, f"{key_path}.{key}")
 
     def _update_config(self, key: str, value: str) -> None:
         """ Update the configuration base on key and value """

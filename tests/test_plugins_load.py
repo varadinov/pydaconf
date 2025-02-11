@@ -1,8 +1,10 @@
 from collections.abc import Callable
 from unittest.mock import MagicMock, patch
 
+from pydaconf import PydaConf
 from pydaconf.plugins.base import PluginBase
 from pydaconf.utils.plugins import load_builtin_plugins, load_dynamic_plugins
+from pydantic import BaseModel
 
 
 class InvalidPlugin:
@@ -48,3 +50,19 @@ def test_skip_invalid_plugin() -> None:
 
         # Assertions
         assert len(plugins) == 0
+
+
+def test_provider_load_dynamic_plugins() -> None:
+    class Config(BaseModel):
+        test: str
+
+    with patch("importlib.metadata.entry_points") as mock_entry_points:
+        dummy_plugin = MagicMock()
+        dummy_plugin.load.return_value = DummyPlugin
+
+        mock_entry_points.return_value = [dummy_plugin]
+
+        provider = PydaConf[Config]()
+        provider.from_dict({'test': 'test'})
+        _ = provider.config
+        assert isinstance(provider._plugins['DUMMY'], DummyPlugin)

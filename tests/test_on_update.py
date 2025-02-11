@@ -3,7 +3,9 @@ import time
 from collections.abc import Callable
 from unittest.mock import Mock, call
 
-from pydaconf import PydaConf
+import pytest
+
+from pydaconf import ProviderException, PydaConf
 from pydaconf.plugins.base import PluginBase
 from pydantic import BaseModel
 
@@ -18,6 +20,7 @@ class User(BaseModel):
 class Config(BaseModel):
     connection: ConnectionConfig
     users: list[User]
+    developer: list[str]
 
 class TestUpdatePlugin(PluginBase):
     """Test plugin"""
@@ -46,7 +49,8 @@ def test_on_update() -> None:
         "users": [
             { "username": "test", "password": "ONUPDATE:///Test2"},
             { "username": "test2", "password": "ONUPDATE:///Test3"},
-        ]
+        ],
+        "developer": ["ONUPDATE:///Test4"]
     }
     provider = PydaConf[Config]()
     provider.register_plugin(TestUpdatePlugin)
@@ -66,3 +70,9 @@ def test_on_update() -> None:
         call('.users[0].password', 'Update'),
         call('.users[1].password', 'Update')]
     mock_callback_users_password.assert_has_calls(expected_calls, any_order=True)
+
+
+def test_on_update_not_initialized() -> None:
+    with pytest.raises(ProviderException):
+        provider = PydaConf[Config]()
+        provider._on_update('test', 'test')
