@@ -3,7 +3,7 @@
     <em>Modern python configuration file manager using  <a href="https://docs.pydantic.dev/latest/">Pydantic</a> and python type hints.</em>
 </p>
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/varadinov/pydaconf/test.yaml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/varadinov/pydaconf/ci.yaml)
 ![GitHub last commit](https://img.shields.io/github/last-commit/varadinov/pydaconf)
 ![GitHub](https://img.shields.io/github/license/varadinov/pydaconf)
 [![GitHub](https://varadinov.github.io/pydaconf/coverage.svg)](https://varadinov.github.io/pydaconf/)
