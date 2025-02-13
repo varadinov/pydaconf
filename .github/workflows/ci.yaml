@@ -185,6 +185,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     needs:
       - coverage-combine
+      - mypy
+      - lint
     runs-on: ubuntu-latest
     environment:
       name: release
@@ -203,5 +205,5 @@ jobs:
         env:
           FLIT_USERNAME: "__token__"
           FLIT_PASSWORD: ${{ secrets.FLIT_PASSWORD }}
-          FLIT_INDEX_URL: "https://pypi.org/legacy/"
+          FLIT_INDEX_URL: "https://upload.pypi.org/legacy/"
         run: flit publish
