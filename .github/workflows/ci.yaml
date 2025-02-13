@@ -153,11 +153,10 @@ jobs:
 
   publish-htmlcov:
     if: startsWith(github.ref, 'refs/tags/')
+    needs:
+        - coverage-combine
     environment:
       name: github-pages
-    needs:
-        - check
-        - coverage-combine
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -184,6 +183,8 @@ jobs:
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
+    needs:
+      - coverage-combine
     runs-on: ubuntu-latest
     environment:
       name: release
