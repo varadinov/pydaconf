@@ -203,5 +203,5 @@ jobs:
         env:
           FLIT_USERNAME: "__token__"
           FLIT_PASSWORD: ${{ secrets.FLIT_PASSWORD }}
-          FLIT_INDEX_URL: "https://test.pypi.org/legacy/"
+          FLIT_INDEX_URL: "https://pypi.org/legacy/"
         run: flit publish
