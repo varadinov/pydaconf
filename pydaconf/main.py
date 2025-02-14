@@ -186,10 +186,10 @@ class PydaConf(Generic[T]):
         with self._update_lock:
             self._update_config(key, value)
 
-        for key_patters, subscribers in self._update_subscribers.items():
-            if re.match(key_patters, key):
-                for subscriber in subscribers:
-                    subscriber(key, value)
+            for key_patters, subscribers in self._update_subscribers.items():
+                if re.match(key_patters, key):
+                    for subscriber in subscribers:
+                        subscriber(key, value)
 
 
     def __repr__(self) -> str:

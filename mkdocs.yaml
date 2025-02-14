@@ -1,0 +1,21 @@
+site_name: Pydaconf
+site_description: Modern python configuration file manager using Pydantic and python type hints.
+strict: true
+site_url: https://varadinov.github.io/pydaconf/
+theme:
+  name: readthedocs
+nav:
+  - Get Started:
+      - Welcome to Pydaconf: index.md
+      - Installation: install.md
+  - Concepts:
+      - Config files: config_files.md
+      - Values interpolation: interpolation.md
+      - Plugins: plugins.md
+      - On Update: on_update.md
+      - CLI: cli.md
+  - Plugins System:
+      - Install plugins: plugins/install_plugins.md
+      - Develop and package plugin: plugins/develop_and_package_plugin.md
+  - Examples and Guides:
+      - Sealed Secrets: examples/sealed_secrets.md

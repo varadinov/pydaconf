@@ -82,6 +82,7 @@ dev = [
     "types-pyyaml>=6.0.12.20241230",
     "types-requests>=2.32.0.20241016",
     "coverage-badge>=1.1.2",
+    "mkdocs>=1.6.1",
 ]
 
 [project.optional-dependencies]
