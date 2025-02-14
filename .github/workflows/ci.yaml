@@ -172,6 +172,8 @@ jobs:
             pyproject.toml
       - name: Install Dependencies
         run: uv venv && source .venv/bin/activate && uv pip install mkdocs
+      - name: Run mkdocs build
+        run: .venv/bin/mkdocs build
       - name: Store mkdocs site
         uses: actions/upload-artifact@v4
         with:
