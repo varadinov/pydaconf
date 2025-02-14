@@ -171,7 +171,7 @@ jobs:
           cache-dependency-glob: |
             pyproject.toml
       - name: Install Dependencies
-        run: .venv/bin/uv pip install mkdocs
+        run: uv venv && source .venv/bin/activate && uv pip install mkdocs
       - name: Store mkdocs site
         uses: actions/upload-artifact@v4
         with:
