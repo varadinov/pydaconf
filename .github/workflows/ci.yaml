@@ -193,7 +193,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: mkdocs
-          path: site
+          path: mkdocs
           merge-multiple: true
       - uses: actions/checkout@v4
 
@@ -201,11 +201,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: coverage-html
-          path: site/coverage-html
+          path: coverage-html
           merge-multiple: true
 #      - name: Setup tmate session
 #        uses: mxschmitt/action-tmate@v3
 
+      - name: Prepare pages artifact
+        run: |
+          mkdir -p pages
+          cp -r ./mkdocs/. pages/
+          cp -r ./coverage-html pages/coverage-html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -213,10 +218,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: ./pages
 
       - name: Deploy to GitHub Pages
-        id: mkdocs
+        id: site
         uses: actions/deploy-pages@v4
 
   release:
