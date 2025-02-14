@@ -9,7 +9,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/varadinov/pydaconf/ci.yaml)
 ![GitHub last commit](https://img.shields.io/github/last-commit/varadinov/pydaconf)
 ![GitHub](https://img.shields.io/github/license/varadinov/pydaconf)
-[![GitHub](https://varadinov.github.io/pydaconf/coverage.svg)](https://varadinov.github.io/pydaconf/)
+[![GitHub](https://varadinov.github.io/pydaconf/coverage-html/coverage.svg)](https://varadinov.github.io/pydaconf/)
 [![Docs](https://img.shields.io/badge/docs-latest-blue)](https://varadinov.github.io/pydaconf/)
 
 
@@ -18,7 +18,7 @@ Pydaconf is a simple yet powerful open-source Python library for loading applica
 
 ## Installation
 Install using `pip install pydaconf[all]`  
-For more installation options see the [Install](https://https://varadinov.github.io/pydaconf/) section in the documentation.
+For more installation options see the [Install](https://varadinov.github.io/pydaconf/install/) section in the documentation.
 
 
 ## A Simple Example
@@ -53,7 +53,7 @@ print(provider.config.database.password)
 ```
 
 ## Help
-See [documentation](https://https://varadinov.github.io/pydaconf/) for more details.
+See [documentation](https://varadinov.github.io/pydaconf/) for more details.
 
 ## Interpolation
 
@@ -75,3 +75,7 @@ See [documentation](https://https://varadinov.github.io/pydaconf/) for more deta
 | Plugin        | Description                |
 |---------------|----------------------------|
 |            |  |
+
+
+## Tests coverage
+[Coverage Report](https://varadinov.github.io/pydaconf/coverage-html/)
