@@ -1,3 +1,5 @@
+![logo](logo.png)
+
 # Welcome to PydaConf
 **PydaConf** is a lightweight yet powerful open-source Python library for loading application configurations. It leverages modern Python features, including type hints and Pydantic models, for clarity and maintainability.
 

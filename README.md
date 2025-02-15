@@ -11,7 +11,9 @@
 ![GitHub](https://img.shields.io/github/license/varadinov/pydaconf)
 [![GitHub](https://varadinov.github.io/pydaconf/coverage-html/coverage.svg)](https://varadinov.github.io/pydaconf/)
 [![Docs](https://img.shields.io/badge/docs-latest-blue)](https://varadinov.github.io/pydaconf/)
-
+[![downloads](https://static.pepy.tech/badge/pydaconf/month)](https://pepy.tech/project/pydaconf)
+![PyPI - Version](https://img.shields.io/pypi/v/pydaconf)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pydaconf)
 
 ## What is PydaConf
 Pydaconf is a simple yet powerful open-source Python library for loading application configurations. It leverages modern Python features, including type hints and the awesome data validation Pydantic models for clarity and maintainability. Pydaconf provides seamless configuration loading from YAML, TOML, and JSON files while supporting dynamic secret injection via a pluggable architecture.
