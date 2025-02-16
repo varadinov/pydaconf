@@ -1,0 +1,26 @@
+repos:
+  - repo: local
+    hooks:
+      - id: mypy-check
+        name: Run mypy
+        entry: mypy .
+        language: system
+        pass_filenames: false
+
+      - id: ruff-check
+        name: Run Ruff
+        entry: ruff check .
+        language: system
+        pass_filenames: false
+
+      - id: pytest-check
+        name: Run Pytest
+        entry: pytest
+        language: system
+        pass_filenames: false
+
+      - id: mkdocs-build
+        name: Build MkDocs
+        entry: mkdocs build
+        language: system
+        pass_filenames: false
