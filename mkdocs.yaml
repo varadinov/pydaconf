@@ -4,6 +4,8 @@ strict: true
 site_url: https://varadinov.github.io/pydaconf/
 theme:
   name: readthedocs
+  custom_dir: "docs_overrides"
+
 nav:
   - Get Started:
       - Welcome to Pydaconf: index.md

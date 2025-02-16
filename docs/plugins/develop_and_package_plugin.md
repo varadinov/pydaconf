@@ -19,7 +19,35 @@ class CustomPlugin(PluginBase):
         return f"Processed {value}"
 ```
 
-## 2. Packaging the Plugin
+## 2. Use the official template repo
+
+To package the plugin as a standalone installable package using the template repo, follow these steps:
+
+* Install cookiecutter
+```bash
+uvx cookiecutter
+```
+or
+
+```bash
+pipx install cookiecutter
+```
+or
+
+```bash
+pip install cookiecutter
+```
+
+* Run cookiecutter
+```bash
+cookiecutter https://github.com/varadinov/pydaconf-plugins-template
+```
+
+* Provide the required parameters  
+
+>**Note** This will create the plugin directory with all required files
+
+## 3. Packaging the Plugin Manually
 
 To package the plugin as a standalone installable package, follow these steps:
 
