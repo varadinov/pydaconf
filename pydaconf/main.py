@@ -30,18 +30,22 @@ class PydaConf(Generic[T]):
 
     def from_file(self, file_path: str) -> None:
         self._load_plugins()
+        self.logger.debug(f"Load config from file_path '{file_path}'")
         self._raw_config = load_config_file(file_path)
 
     def from_url(self, url: str) -> None:
         self._load_plugins()
+        self.logger.debug(f"Load config from url '{url}'")
         self._raw_config = load_from_url(url)
 
     def from_dict(self, dict_data: dict) -> None:
         self._load_plugins()
+        self.logger.debug("Load config from dict")
         self._raw_config = dict_data
 
     @property
     def config(self) -> T:
+        self.logger.debug("Check if provider is initialized")
         if self._raw_config is None:
             raise ProviderException("""PydaConf is not initialized. 
                                     You need to run on of these methods first from_file('file_path'), from_dict(dict_data) or from_url(url).""")
@@ -57,6 +61,7 @@ class PydaConf(Generic[T]):
                 self.logger.debug("Build config object")
                 config: T = self._get_generic_type()(**config_copy)
                 self._config = config
+                self.logger.debug("Config object was build successfully")
             except ValidationError as e:
                 raise ProviderException('Configuration file validation failed with errors', e.errors()) from e
 
@@ -64,17 +69,22 @@ class PydaConf(Generic[T]):
 
     def register_plugin(self, plugin_class: type[PluginBase]) -> None:
         """ Manually register plugin """
+
+        self.logger.debug(f"Register plugin for '{plugin_class}'")
         self._plugins[str(plugin_class.PREFIX)] = plugin_class()
 
     def on_update(self, key_pattern: str, callback: Callable[[str, str], None]) -> None:
         """Subscribe to an update events of specific pattern."""
+        self.logger.debug(f"Register on_update for key_patter '{key_pattern}'")
         self._update_subscribers.setdefault(key_pattern, [])
         self._update_subscribers[key_pattern].append(callback)
 
     def _get_generic_type(self) -> type[T]:
         """Return the type of generic T """
 
-        # This is a bit hacky method since __orig_class__ is not well documented and could be changed in future...
+        self.logger.debug("Check the type of the generic")
+
+        # This is a bit hacky method since __orig_class__ is not well documented and could be changed in the future...
         orig_class = getattr(self, '__orig_class__', None)
         if orig_class is None:
             raise ProviderException('PydaConf must be defined as generic Config[MyPydanticType]()')
@@ -86,7 +96,9 @@ class PydaConf(Generic[T]):
         return generic_type
 
     def _load_plugins(self) -> None:
+        self.logger.debug("Load builtin plugins")
         self._load_builtin_plugins()
+        self.logger.debug("Load dynamic plugins")
         self._load_dynamic_plugins()
         
     def _load_builtin_plugins(self) -> None:
@@ -181,6 +193,8 @@ class PydaConf(Generic[T]):
 
     def _on_update(self, key: str, value: str) -> None:
         """ Update the configuration and notify all subscribers registered for specific key pattern """
+
+        self.logger.debug(f"Call _on_update for '{key}' and value '{value}'")
 
         # We use thread lock to protection against race conditions when threads access shared objects.
         with self._update_lock:

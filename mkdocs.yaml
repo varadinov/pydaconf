@@ -21,3 +21,5 @@ nav:
       - Develop and package plugin: plugins/develop_and_package_plugin.md
   - Examples and Guides:
       - Sealed Secrets: examples/sealed_secrets.md
+  - Other:
+      - Enable debug logging: debug_logging.md

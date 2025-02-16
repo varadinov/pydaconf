@@ -1,6 +1,7 @@
 import importlib
 import importlib.metadata
 import inspect
+import logging
 import os
 import pkgutil
 from collections.abc import Iterator
@@ -8,6 +9,7 @@ from collections.abc import Iterator
 import pydaconf.plugins
 from pydaconf.plugins.base import PluginBase
 
+logger = logging.getLogger(__name__)
 
 def load_builtin_plugins() -> Iterator[PluginBase]:
     for _, module_name, _ in pkgutil.iter_modules([str(f"{os.path.dirname(pydaconf.plugins.base.__file__)}")]):
@@ -17,10 +19,12 @@ def load_builtin_plugins() -> Iterator[PluginBase]:
         # Inspect module and find classes that subclass PluginBase
         for _, plugin_class in inspect.getmembers(module, inspect.isclass):
             if issubclass(plugin_class, PluginBase) and plugin_class is not PluginBase:
+                logger.debug(f"Builtin plugin '{plugin_class.PREFIX}' found.")
                 yield plugin_class()
 
 def load_dynamic_plugins() -> Iterator[PluginBase]:
     for entry_point in importlib.metadata.entry_points(group='pydaconf.plugins'):
         plugin_class = entry_point.load()
         if issubclass(plugin_class, PluginBase):
+            logger.debug(f"Dynamic plugin '{plugin_class.PREFIX}' found.")
             yield plugin_class()
