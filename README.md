@@ -74,9 +74,10 @@ See [documentation](https://varadinov.github.io/pydaconf/) for more details.
 | FILE_CONTENT  | Inject content from a file. This is useful in scenarios where the secret is mounted on the file system, such as in k8s containers.                                | 
 
 ## Official plugins
-| Plugin     | Description                             | Install                          | Info                                                     |
-|------------|-----------------------------------------|----------------------------------|----------------------------------------------------------|
-| K8S_SECRET | Pydaconf plugin for Kubernetes Secrets  | pip install pydaconf-plugins-k8s | [Docs](https://github.com/varadinov/pydaconf-plugins-k8s) |
+| Plugin    | Description                           | Install                            | Info                                                        |
+|-----------|---------------------------------------|------------------------------------|-------------------------------------------------------------|
+| K8S_SECRET | Pydaconf plugin for Kubernetes Secrets | pip install pydaconf-plugins-k8s   | [Docs](https://github.com/varadinov/pydaconf-plugins-k8s)   |
+| VAULT     | Pydaconf plugin for Vault and OpenBao | pip install pydaconf-plugins-vault | [Docs](https://github.com/varadinov/pydaconf-plugins-vault) |
 
 
 ## Tests coverage
